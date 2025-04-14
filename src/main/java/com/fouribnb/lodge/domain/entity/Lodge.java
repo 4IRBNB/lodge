@@ -9,9 +9,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 
 @Entity
 @Table(name = "p_lodge")
+@Getter
+@NoArgsConstructor
 public class Lodge {
 
     @Id
@@ -20,7 +26,7 @@ public class Lodge {
     private UUID id;
 
     @Column(nullable = false, name = "host_id")
-    private UUID hostId;
+    private Long hostId;
 
     @Column(nullable = false, name = "lodge_name")
     private String lodgeName;
@@ -51,7 +57,18 @@ public class Lodge {
 
     //todo. 비어있음/투숙중 상태가 추가되어야 할지?
 
-
-
-
+    @Builder
+    public Lodge(Long hostId, String lodgeName, RoomType roomType, int capacity, String address,
+            long pricePerNight, String discription, Amenities amenities, LodgeStatus lodgeStatus) {
+        this.hostId = hostId;
+        this.lodgeName = lodgeName;
+        this.roomType = roomType;
+        this.capacity = capacity;
+        this.address = address;
+        this.pricePerNight = pricePerNight;
+        this.discription = discription;
+        this.amenities = amenities;
+        this.lodgeStatus = lodgeStatus;
+    }
 }
+
