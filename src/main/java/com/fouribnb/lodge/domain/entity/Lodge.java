@@ -45,7 +45,7 @@ public class Lodge {
     private long pricePerNight;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String discription;
+    private String description;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -59,14 +59,14 @@ public class Lodge {
 
     @Builder
     public Lodge(Long hostId, String lodgeName, RoomType roomType, int capacity, String address,
-            long pricePerNight, String discription, Amenities amenities, LodgeStatus lodgeStatus) {
+            long pricePerNight, String description, Amenities amenities, LodgeStatus lodgeStatus) {
         this.hostId = hostId;
         this.lodgeName = lodgeName;
         this.roomType = roomType;
         this.capacity = capacity;
         this.address = address;
         this.pricePerNight = pricePerNight;
-        this.discription = discription;
+        this.description = description;
         this.amenities = amenities;
         this.lodgeStatus = lodgeStatus;
     }

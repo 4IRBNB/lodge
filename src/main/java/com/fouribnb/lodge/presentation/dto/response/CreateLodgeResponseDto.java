@@ -17,7 +17,7 @@ public class CreateLodgeResponseDto {
     private RoomType roomType;
     private int capacity;
     private String address;
-    private Long pricePerNignt;
+    private Long pricePerNight;
     private String description;
     private Amenities amenities;
     private LodgeStatus lodgeStatus;
