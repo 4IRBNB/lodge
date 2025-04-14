@@ -4,7 +4,6 @@ import com.fouribnb.lodge.domain.entity.Amenities;
 import com.fouribnb.lodge.domain.entity.RoomType;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @Builder
