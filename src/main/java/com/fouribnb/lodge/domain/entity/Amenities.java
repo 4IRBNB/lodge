@@ -14,13 +14,13 @@ public enum Amenities {
     INDUCTION_COOKER("인덕션"),
     DINING_TABLE("식탁");
 
-    private final String value;
+    private final String description;
 
     Amenities(String value) {
-        this.value = value;
+        this.description = value;
     }
 
     public String getValue() {
-        return value;
+        return description;
     }
 }
