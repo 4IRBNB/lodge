@@ -4,6 +4,7 @@ import com.fouribnb.lodge.domain.entity.Lodge;
 import com.fouribnb.lodge.domain.entity.LodgeStatus;
 import com.fouribnb.lodge.presentation.dto.request.CreateLodgeRequestDto;
 import com.fouribnb.lodge.presentation.dto.response.CreateLodgeResponseDto;
+import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
 
 public class LodgeMapper {
 
@@ -25,6 +26,7 @@ public class LodgeMapper {
         return CreateLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())
+                .lodgeName(lodge.getLodgeName())
                 .roomType(lodge.getRoomType())
                 .address(lodge.getAddress())
                 .capacity(lodge.getCapacity())
@@ -34,4 +36,20 @@ public class LodgeMapper {
                 .lodgeStatus(lodge.getLodgeStatus())
                 .build();
     }
+
+    public static GetLodgeResponseDto EntityToGetLodgeRequestDto(Lodge lodge) {
+        return GetLodgeResponseDto.builder()
+                .lodgeId(lodge.getId())
+                .hostId(lodge.getHostId())
+                .lodgeName(lodge.getLodgeName())
+                .roomType(lodge.getRoomType())
+                .address(lodge.getAddress())
+                .capacity(lodge.getCapacity())
+                .description(lodge.getDescription())
+                .pricePerNight(lodge.getPricePerNight())
+                .amenities(lodge.getAmenities())
+                .lodgeStatus(lodge.getLodgeStatus())
+                .build();
+    }
+
 }
