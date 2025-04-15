@@ -18,13 +18,13 @@ public class LodgeMapper {
                 .address(dto.getAddress())
                 .capacity(dto.getCapacity())
                 .description(dto.getDescription())
-                .pricePerNight(dto.getPricePerNignt())
+                .pricePerNight(dto.getPricePerNight())
                 .amenities(dto.getAmenities())
                 .lodgeStatus(LodgeStatus.IN_SERVICE)
                 .build();
     }
 
-    public static CreateLodgeResponseDto entityToCreateLodgeRequestDto(Lodge lodge) {
+    public static CreateLodgeResponseDto entityToCreateLodgeResponseDto(Lodge lodge) {
         return CreateLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())
@@ -39,7 +39,7 @@ public class LodgeMapper {
                 .build();
     }
 
-    public static GetLodgeResponseDto entityToGetLodgeRequestDto(Lodge lodge) {
+    public static GetLodgeResponseDto entityToGetLodgeResponseDto(Lodge lodge) {
         return GetLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())

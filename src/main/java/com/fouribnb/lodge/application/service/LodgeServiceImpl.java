@@ -25,14 +25,14 @@ public class LodgeServiceImpl implements LodgeService {
     public CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request) {
         Lodge lodge = LodgeMapper.createLodgeRequestDtoToEntity(request);
         lodgeRepository.save(lodge);
-        return LodgeMapper.entityToCreateLodgeRequestDto(lodge);
+        return LodgeMapper.entityToCreateLodgeResponseDto(lodge);
     }
 
     @Override
     public GetLodgeResponseDto getLodge(UUID id) throws NotFoundException {
         Lodge lodge = lodgeRepository.findById(id).orElseThrow(() -> new NotFoundException());
         //todo. customException?
-        return LodgeMapper.entityToGetLodgeRequestDto(lodge);
+        return LodgeMapper.entityToGetLodgeResponseDto(lodge);
     }
 
     @Override
