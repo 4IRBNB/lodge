@@ -55,7 +55,7 @@ public class LodgeMapper {
     }
 
 
-    public static UpdateLodgeResponseDto entityToUpdateLodgeRequestDto(Lodge lodge) {
+    public static UpdateLodgeResponseDto entityToUpdateLodgeResponseDto(Lodge lodge) {
         return UpdateLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())

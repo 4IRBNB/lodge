@@ -40,7 +40,7 @@ public class LodgeServiceImpl implements LodgeService {
             throws NotFoundException {
         Lodge lodge = lodgeRepository.findById(id).orElseThrow(() -> new NotFoundException());
         lodge.update(request);
-        return LodgeMapper.entityToUpdateLodgeRequestDto(lodge);
+        return LodgeMapper.entityToUpdateLodgeResponseDto(lodge);
     }
 
 
