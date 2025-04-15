@@ -3,9 +3,13 @@ package com.fouribnb.lodge.presentation.controller;
 import com.fouribnb.lodge.application.service.LodgeService;
 import com.fouribnb.lodge.presentation.dto.request.CreateLodgeRequestDto;
 import com.fouribnb.lodge.presentation.dto.response.CreateLodgeResponseDto;
+import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +31,12 @@ public class LodgeController {
     }
 
     //객실단건조회
-
+    @GetMapping("/{lodgeId}")
+    public ResponseEntity<GetLodgeResponseDto> getLodge(@PathVariable UUID lodgeId)
+            throws NotFoundException {
+        GetLodgeResponseDto responseDto = lodgeService.getLodge(lodgeId);
+        return ResponseEntity.ok(responseDto);
+    }
 
     //객실단건조회(내부)
     //
