@@ -78,7 +78,7 @@ public class Lodge {
         this.roomType = requestDto.getRoomType();
         this.capacity = requestDto.getCapacity();
         this.address = requestDto.getAddress();
-        this.pricePerNight = requestDto.getPricePerNignt();
+        this.pricePerNight = requestDto.getPricePerNight();
         this.description = requestDto.getDescription();
         this.amenities = requestDto.getAmenities();
     }
