@@ -7,9 +7,8 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CreateLodgeRequestDto {
+public class UpdateLodgeRequestDto {
 
-    private Long hostId;
     private String lodgeName;
     private RoomType roomType;
     private int capacity;
@@ -17,4 +16,5 @@ public class CreateLodgeRequestDto {
     private Long pricePerNight;
     private String description;
     private Amenities amenities;
+
 }

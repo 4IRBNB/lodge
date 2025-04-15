@@ -4,8 +4,10 @@ import com.fouribnb.lodge.config.LodgeErrorCode;
 import com.fouribnb.lodge.domain.entity.Lodge;
 import com.fouribnb.lodge.domain.repository.LodgeRepository;
 import com.fouribnb.lodge.presentation.dto.request.CreateLodgeRequestDto;
+import com.fouribnb.lodge.presentation.dto.request.UpdateLodgeRequestDto;
 import com.fouribnb.lodge.presentation.dto.response.CreateLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
+import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
 import com.fouribnb.lodge.presentation.mapper.LodgeMapper;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +23,25 @@ public class LodgeServiceImpl implements LodgeService {
 
     @Override
     public CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request) {
-        Lodge lodge = LodgeMapper.CreateLodgeRequestDtoToEntity(request);
+        Lodge lodge = LodgeMapper.createLodgeRequestDtoToEntity(request);
         lodgeRepository.save(lodge);
-        return LodgeMapper.EntityToCreateLodgeRequestDto(lodge);
+        return LodgeMapper.entityToCreateLodgeResponseDto(lodge);
     }
 
     @Override
     public GetLodgeResponseDto getLodge(UUID id) throws NotFoundException {
         Lodge lodge = lodgeRepository.findById(id).orElseThrow(() -> new NotFoundException());
         //todo. customException?
-        return LodgeMapper.EntityToGetLodgeRequestDto(lodge);
+        return LodgeMapper.entityToGetLodgeResponseDto(lodge);
     }
+
+    @Override
+    public UpdateLodgeResponseDto updateLodge(UUID id, UpdateLodgeRequestDto request)
+            throws NotFoundException {
+        Lodge lodge = lodgeRepository.findById(id).orElseThrow(() -> new NotFoundException());
+        lodge.update(request);
+        return LodgeMapper.entityToUpdateLodgeResponseDto(lodge);
+    }
+
+
 }
