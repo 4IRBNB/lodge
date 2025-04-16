@@ -8,6 +8,7 @@ import com.fouribnb.lodge.presentation.dto.response.CreateLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
 import com.fouribnb.lodge.presentation.mapper.LodgeMapper;
+import com.fourirbnb.common.exception.ResourceNotFoundException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class LodgeServiceImpl implements LodgeService {
+
     private final LodgeRepository lodgeRepository;
 
     @Override
@@ -28,16 +30,16 @@ public class LodgeServiceImpl implements LodgeService {
     }
 
     @Override
-    public GetLodgeResponseDto getLodge(UUID id) throws NotFoundException {
-        Lodge lodge = lodgeRepository.findById(id).orElseThrow(() -> new NotFoundException());
-        //todo. customException?
+    public GetLodgeResponseDto getLodge(UUID id) {
+        Lodge lodge = lodgeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("lodge를 찾을 수 없음"));
         return LodgeMapper.GetToResponse(lodge);
     }
 
     @Override
-    public UpdateLodgeResponseDto updateLodge(UUID id, UpdateLodgeRequestDto request)
-            throws NotFoundException {
-        Lodge lodge = lodgeRepository.findById(id).orElseThrow(() -> new NotFoundException());
+    public UpdateLodgeResponseDto updateLodge(UUID id, UpdateLodgeRequestDto request) {
+        Lodge lodge = lodgeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("lodge를 찾을 수 없음"));
         lodge.update(request);
         return LodgeMapper.UpdateToResponse(lodge);
     }
