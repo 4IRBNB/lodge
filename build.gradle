@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'com.fouribnb'
+group = 'com.fourirbnb'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -15,13 +15,13 @@ java {
 
 repositories {
 	mavenCentral()
-//	maven {
-//		url = uri("https://maven.pkg.github.com/4IRBNB/common-module")
-//		credentials {
-//			username = project.findProperty("gpr.user") // 이전처럼 키값은 gradle.properties 로 관리
-//			password = project.findProperty("gpr.key") // user - 개인 사용자(닉네임) / key - 개인 토큰
-//		}
-//	}
+	maven {
+		url = uri("https://maven.pkg.github.com/4IRBNB/common-module")
+		credentials {
+			username = project.findProperty("gpr.user") // 이전처럼 키값은 gradle.properties 로 관리
+			password = project.findProperty("gpr.key") // user - 개인 사용자(닉네임) / key - 개인 토큰
+		}
+	}
 }
 ext {
 	set('springCloudVersion', "2024.0.1")
@@ -29,7 +29,7 @@ ext {
 
 dependencies {
 	//common
-//	implementation 'com.fourirbnb:common:1.2.3'
+	implementation 'com.fourirbnb:common:1.4.0'
 
 	//h2
 	runtimeOnly 'com.h2database:h2'
