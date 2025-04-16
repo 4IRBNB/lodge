@@ -11,7 +11,6 @@ import com.fouribnb.lodge.presentation.mapper.LodgeMapper;
 import com.fourirbnb.common.exception.ResourceNotFoundException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
