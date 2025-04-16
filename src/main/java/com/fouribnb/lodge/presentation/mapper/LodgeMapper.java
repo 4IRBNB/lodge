@@ -5,10 +5,12 @@ import com.fouribnb.lodge.domain.entity.LodgeStatus;
 import com.fouribnb.lodge.presentation.dto.request.CreateLodgeRequestDto;
 import com.fouribnb.lodge.presentation.dto.response.CreateLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
+import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
 
 public class LodgeMapper {
 
-    public static Lodge CreateLodgeRequestDtoToEntity(CreateLodgeRequestDto dto) {
+    //todo. 메서드명 수정
+    public static Lodge createLodgeRequestDtoToEntity(CreateLodgeRequestDto dto) {
         return Lodge.builder()
                 .lodgeName(dto.getLodgeName())
                 .hostId(dto.getHostId())
@@ -16,13 +18,13 @@ public class LodgeMapper {
                 .address(dto.getAddress())
                 .capacity(dto.getCapacity())
                 .description(dto.getDescription())
-                .pricePerNight(dto.getPricePerNignt())
+                .pricePerNight(dto.getPricePerNight())
                 .amenities(dto.getAmenities())
                 .lodgeStatus(LodgeStatus.IN_SERVICE)
                 .build();
     }
 
-    public static CreateLodgeResponseDto EntityToCreateLodgeRequestDto(Lodge lodge) {
+    public static CreateLodgeResponseDto entityToCreateLodgeResponseDto(Lodge lodge) {
         return CreateLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())
@@ -37,8 +39,24 @@ public class LodgeMapper {
                 .build();
     }
 
-    public static GetLodgeResponseDto EntityToGetLodgeRequestDto(Lodge lodge) {
+    public static GetLodgeResponseDto entityToGetLodgeResponseDto(Lodge lodge) {
         return GetLodgeResponseDto.builder()
+                .lodgeId(lodge.getId())
+                .hostId(lodge.getHostId())
+                .lodgeName(lodge.getLodgeName())
+                .roomType(lodge.getRoomType())
+                .address(lodge.getAddress())
+                .capacity(lodge.getCapacity())
+                .description(lodge.getDescription())
+                .pricePerNight(lodge.getPricePerNight())
+                .amenities(lodge.getAmenities())
+                .lodgeStatus(lodge.getLodgeStatus())
+                .build();
+    }
+
+
+    public static UpdateLodgeResponseDto entityToUpdateLodgeResponseDto(Lodge lodge) {
+        return UpdateLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())
                 .lodgeName(lodge.getLodgeName())

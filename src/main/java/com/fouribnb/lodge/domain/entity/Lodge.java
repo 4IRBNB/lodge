@@ -1,5 +1,6 @@
 package com.fouribnb.lodge.domain.entity;
 
+import com.fouribnb.lodge.presentation.dto.request.UpdateLodgeRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -50,6 +51,7 @@ public class Lodge {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Amenities amenities;
+    //todo. amenities 여러 개 선택 가능하게 변경예정
 
     @Column(nullable = false, name = "lodge_status")
     @Enumerated(EnumType.STRING)
@@ -69,6 +71,16 @@ public class Lodge {
         this.description = description;
         this.amenities = amenities;
         this.lodgeStatus = lodgeStatus;
+    }
+
+    public void update(UpdateLodgeRequestDto requestDto) {
+        this.lodgeName = requestDto.getLodgeName();
+        this.roomType = requestDto.getRoomType();
+        this.capacity = requestDto.getCapacity();
+        this.address = requestDto.getAddress();
+        this.pricePerNight = requestDto.getPricePerNight();
+        this.description = requestDto.getDescription();
+        this.amenities = requestDto.getAmenities();
     }
 }
 

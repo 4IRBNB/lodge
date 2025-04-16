@@ -11,14 +11,14 @@ public enum RoomType {
     DETACHED_HOUSE("단독주택"),
     STUDIO_APARTMENT("원룸");
 
-    private final String value;
+    private final String description;
 
     RoomType(String value) {
-        this.value = value;
+        this.description = value;
     }
 
     public String getValue() {
-        return value;
+        return description;
     }
 
 
