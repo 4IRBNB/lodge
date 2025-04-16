@@ -9,8 +9,7 @@ import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
 
 public class LodgeMapper {
 
-    //todo. 메서드명 수정
-    public static Lodge createLodgeRequestDtoToEntity(CreateLodgeRequestDto dto) {
+    public static Lodge createToEntity(CreateLodgeRequestDto dto) {
         return Lodge.builder()
                 .lodgeName(dto.getLodgeName())
                 .hostId(dto.getHostId())
@@ -24,7 +23,7 @@ public class LodgeMapper {
                 .build();
     }
 
-    public static CreateLodgeResponseDto entityToCreateLodgeResponseDto(Lodge lodge) {
+    public static CreateLodgeResponseDto CreateToResponse(Lodge lodge) {
         return CreateLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())
@@ -39,7 +38,7 @@ public class LodgeMapper {
                 .build();
     }
 
-    public static GetLodgeResponseDto entityToGetLodgeResponseDto(Lodge lodge) {
+    public static GetLodgeResponseDto GetToResponse(Lodge lodge) {
         return GetLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())
@@ -55,7 +54,7 @@ public class LodgeMapper {
     }
 
 
-    public static UpdateLodgeResponseDto entityToUpdateLodgeResponseDto(Lodge lodge) {
+    public static UpdateLodgeResponseDto UpdateToResponse(Lodge lodge) {
         return UpdateLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())

@@ -1,6 +1,5 @@
 package com.fouribnb.lodge.application.service;
 
-import com.fouribnb.lodge.config.LodgeErrorCode;
 import com.fouribnb.lodge.domain.entity.Lodge;
 import com.fouribnb.lodge.domain.repository.LodgeRepository;
 import com.fouribnb.lodge.presentation.dto.request.CreateLodgeRequestDto;
@@ -23,16 +22,16 @@ public class LodgeServiceImpl implements LodgeService {
 
     @Override
     public CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request) {
-        Lodge lodge = LodgeMapper.createLodgeRequestDtoToEntity(request);
+        Lodge lodge = LodgeMapper.createToEntity(request);
         lodgeRepository.save(lodge);
-        return LodgeMapper.entityToCreateLodgeResponseDto(lodge);
+        return LodgeMapper.CreateToResponse(lodge);
     }
 
     @Override
     public GetLodgeResponseDto getLodge(UUID id) throws NotFoundException {
         Lodge lodge = lodgeRepository.findById(id).orElseThrow(() -> new NotFoundException());
         //todo. customException?
-        return LodgeMapper.entityToGetLodgeResponseDto(lodge);
+        return LodgeMapper.GetToResponse(lodge);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class LodgeServiceImpl implements LodgeService {
             throws NotFoundException {
         Lodge lodge = lodgeRepository.findById(id).orElseThrow(() -> new NotFoundException());
         lodge.update(request);
-        return LodgeMapper.entityToUpdateLodgeResponseDto(lodge);
+        return LodgeMapper.UpdateToResponse(lodge);
     }
 
 
