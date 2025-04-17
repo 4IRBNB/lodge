@@ -23,7 +23,7 @@ public class LodgeMapper {
                 .build();
     }
 
-    public static CreateLodgeResponseDto CreateToResponse(Lodge lodge) {
+    public static CreateLodgeResponseDto createToResponse(Lodge lodge) {
         return CreateLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())
@@ -38,7 +38,7 @@ public class LodgeMapper {
                 .build();
     }
 
-    public static GetLodgeResponseDto GetToResponse(Lodge lodge) {
+    public static GetLodgeResponseDto getToResponse(Lodge lodge) {
         return GetLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())
@@ -54,7 +54,7 @@ public class LodgeMapper {
     }
 
 
-    public static UpdateLodgeResponseDto UpdateToResponse(Lodge lodge) {
+    public static UpdateLodgeResponseDto updateToResponse(Lodge lodge) {
         return UpdateLodgeResponseDto.builder()
                 .lodgeId(lodge.getId())
                 .hostId(lodge.getHostId())
