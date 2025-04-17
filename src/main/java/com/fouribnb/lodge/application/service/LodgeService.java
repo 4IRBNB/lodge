@@ -23,4 +23,6 @@ public interface LodgeService {
 
     Page<GetLodgeResponseDto> getLodges(Pageable pageable);
 
+    Void deleteLodge(UUID id);
+
 }

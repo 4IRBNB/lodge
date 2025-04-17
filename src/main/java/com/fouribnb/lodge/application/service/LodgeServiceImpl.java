@@ -9,8 +9,6 @@ import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
 import com.fouribnb.lodge.presentation.mapper.LodgeMapper;
 import com.fourirbnb.common.exception.ResourceNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,6 +50,17 @@ public class LodgeServiceImpl implements LodgeService {
         Page<GetLodgeResponseDto> dtos =  lodgeRepository.findAll(pageable)
                 .map(LodgeMapper::getToResponse);
         return dtos;
+    }
+
+    @Override
+    public Void deleteLodge(UUID id) {
+        Lodge lodge = lodgeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("lodge를 찾을 수 없음"));
+//        lodge.delete(currentUserId);
+        lodge.delete(lodge.getHostId());
+        //todo. currentUserId 받아와서 입력
+        lodgeRepository.save(lodge);
+        return null;
     }
 
 
