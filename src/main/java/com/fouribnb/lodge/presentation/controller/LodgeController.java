@@ -6,9 +6,11 @@ import com.fouribnb.lodge.presentation.dto.request.UpdateLodgeRequestDto;
 import com.fouribnb.lodge.presentation.dto.response.CreateLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
+import com.fourirbnb.common.response.BaseResponse;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,29 +27,28 @@ public class LodgeController {
 
     private final LodgeService lodgeService;
 
-    //객실생성
     @PostMapping
-    public ResponseEntity<CreateLodgeResponseDto> createLodge(
+    public BaseResponse<CreateLodgeResponseDto> createLodge(
             @RequestBody CreateLodgeRequestDto requestDto) {
         CreateLodgeResponseDto responseDto = lodgeService.createLodge(requestDto);
-        return ResponseEntity.ok(responseDto);
+        return BaseResponse.SUCCESS(responseDto, "객실 생성 완료", HttpStatus.OK.value());
     }
 
     //객실단건조회
     @GetMapping("/{lodgeId}")
-    public ResponseEntity<GetLodgeResponseDto> getLodge(@PathVariable UUID lodgeId)
+    public BaseResponse<GetLodgeResponseDto> getLodge(@PathVariable UUID lodgeId)
             throws NotFoundException {
         GetLodgeResponseDto responseDto = lodgeService.getLodge(lodgeId);
-        return ResponseEntity.ok(responseDto);
+        return BaseResponse.SUCCESS(responseDto, "객실 단건 조회 완료", HttpStatus.OK.value());
     }
 
     //객실수정
     @PatchMapping("/{lodgeId}")
-    public ResponseEntity<UpdateLodgeResponseDto> updateLodge(@PathVariable UUID lodgeId,
+    public BaseResponse<UpdateLodgeResponseDto> updateLodge(@PathVariable UUID lodgeId,
             @RequestBody UpdateLodgeRequestDto requestDto)
             throws NotFoundException {
         UpdateLodgeResponseDto responseDto = lodgeService.updateLodge(lodgeId, requestDto);
-        return ResponseEntity.ok(responseDto);
+        return BaseResponse.SUCCESS(responseDto, "객실 수정 완료", HttpStatus.OK.value());
     }
     ///api/lodges/{lodgeId}
 

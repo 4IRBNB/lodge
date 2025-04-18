@@ -1,6 +1,7 @@
 package com.fouribnb.lodge.domain.entity;
 
 import com.fouribnb.lodge.presentation.dto.request.UpdateLodgeRequestDto;
+import com.fourirbnb.common.domain.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "p_lodge")
 @Getter
 @NoArgsConstructor
-public class Lodge {
+public class Lodge extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
