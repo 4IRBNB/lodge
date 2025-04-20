@@ -8,6 +8,9 @@ import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
 import com.fourirbnb.common.response.BaseResponse;
 import com.fourirbnb.common.response.Pagination;
+import com.fourirbnb.common.security.AuthenticatedUser;
+import com.fourirbnb.common.security.RoleCheck;
+import com.fourirbnb.common.security.UserInfo;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -78,23 +81,41 @@ public class LodgeController {
     }
 
     //객실삭제
-
     @DeleteMapping("/{lodgeId}")
     public ResponseEntity<Void> deleteLodge(@PathVariable UUID lodgeId) {
         lodgeService.deleteLodge(lodgeId);
         return ResponseEntity.noContent().build();
     }
 
+
+    /// api/lodges/{userId}
     //host객실목록조회
-    ///api/lodges/{userId}
+    @RoleCheck("Master")
+    @GetMapping("/lodges/me")
+    public BaseResponse<List<GetLodgeResponseDto>> getHostLodges(Pageable pageable,
+            @AuthenticatedUser UserInfo userInfo) {
+        Page<GetLodgeResponseDto> page = lodgeService.getHostLodges(pageable, userInfo);
+
+        Pagination pagination = new Pagination(
+                page.getNumber(),
+                (long) page.getSize(),
+                page.getTotalPages(),
+                (int) page.getTotalElements()
+        );
+        return BaseResponse.SUCCESS(
+                page.getContent(),
+                "호스트_나의객실목록 조회 완료",
+                pagination
+        );
+    }
+
+
 
     //host객실목록조회(내부)
 
     //객실검색
     //api/lodges/search?
     //page=1&size=10&sortBy=createdAt&isAsc=true
-
-
 
 
 }
