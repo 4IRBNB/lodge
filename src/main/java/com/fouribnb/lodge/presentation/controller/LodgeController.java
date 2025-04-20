@@ -11,6 +11,7 @@ import com.fourirbnb.common.response.Pagination;
 import com.fourirbnb.common.security.AuthenticatedUser;
 import com.fourirbnb.common.security.RoleCheck;
 import com.fourirbnb.common.security.UserInfo;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -40,10 +41,9 @@ public class LodgeController {
     //todo: 권한체크
     @PostMapping
     public BaseResponse<CreateLodgeResponseDto> createLodge(
-            @RequestBody CreateLodgeRequestDto requestDto, @AuthenticatedUser UserInfo userInfo) {
+            @Valid @RequestBody CreateLodgeRequestDto requestDto, @AuthenticatedUser UserInfo userInfo) {
         CreateLodgeResponseDto responseDto = lodgeService.createLodge(requestDto, userInfo);
         return BaseResponse.SUCCESS(responseDto, "객실 생성 완료", HttpStatus.OK.value());
-        //todo: dto userId -> UserInfo로 변경예정
     }
 
     //객실단건조회
@@ -116,6 +116,7 @@ public class LodgeController {
 
 
 
+    //객실검색
     //객실검색
     //api/lodges/search?
     //page=1&size=10&sortBy=createdAt&isAsc=true
