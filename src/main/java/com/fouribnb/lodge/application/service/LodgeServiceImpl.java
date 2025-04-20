@@ -25,8 +25,9 @@ public class LodgeServiceImpl implements LodgeService {
     private final LodgeRepository lodgeRepository;
 
     @Override
-    public CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request) {
-        Lodge lodge = LodgeMapper.createToEntity(request);
+    public CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request, UserInfo userInfo) {
+        Long currentHostId = userInfo.getUserId();
+        Lodge lodge = LodgeMapper.createToEntity(request, currentHostId);
         lodgeRepository.save(lodge);
         return LodgeMapper.createToResponse(lodge);
     }
@@ -67,8 +68,8 @@ public class LodgeServiceImpl implements LodgeService {
 
     @Override
     public Page<GetLodgeResponseDto> getHostLodges(Pageable pageable, UserInfo userInfo) {
-        Long currentUserId = userInfo.getUserId();
-        Page<GetLodgeResponseDto> dtos =  lodgeRepository.findAllByUserId(pageable, currentUserId)
+        Long currentHostId = userInfo.getUserId();
+        Page<GetLodgeResponseDto> dtos =  lodgeRepository.findAllByUserId(pageable, currentHostId)
                 .map(LodgeMapper::getToResponse);
         return dtos;
 

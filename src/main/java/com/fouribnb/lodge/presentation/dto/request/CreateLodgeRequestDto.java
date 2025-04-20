@@ -9,7 +9,6 @@ import lombok.Getter;
 @Builder
 public class CreateLodgeRequestDto {
 
-    private Long hostId;
     private String lodgeName;
     private RoomType roomType;
     private int capacity;

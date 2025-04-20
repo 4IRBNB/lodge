@@ -37,10 +37,11 @@ public class LodgeController {
 
     private final LodgeService lodgeService;
 
+    //todo: 권한체크
     @PostMapping
     public BaseResponse<CreateLodgeResponseDto> createLodge(
-            @RequestBody CreateLodgeRequestDto requestDto) {
-        CreateLodgeResponseDto responseDto = lodgeService.createLodge(requestDto);
+            @RequestBody CreateLodgeRequestDto requestDto, @AuthenticatedUser UserInfo userInfo) {
+        CreateLodgeResponseDto responseDto = lodgeService.createLodge(requestDto, userInfo);
         return BaseResponse.SUCCESS(responseDto, "객실 생성 완료", HttpStatus.OK.value());
         //todo: dto userId -> UserInfo로 변경예정
     }
@@ -54,6 +55,7 @@ public class LodgeController {
     }
 
     //객실수정
+    //todo: 권한체크
     @PatchMapping("/{lodgeId}")
     public BaseResponse<UpdateLodgeResponseDto> updateLodge(@PathVariable UUID lodgeId,
             @RequestBody UpdateLodgeRequestDto requestDto)
@@ -82,6 +84,7 @@ public class LodgeController {
     }
 
     //객실삭제
+    //todo: 권한체크
     @DeleteMapping("/{lodgeId}")
     public ResponseEntity<Void> deleteLodge(@PathVariable UUID lodgeId, @AuthenticatedUser UserInfo userInfo) {
         lodgeService.deleteLodge(lodgeId, userInfo);
@@ -91,6 +94,7 @@ public class LodgeController {
 
     /// api/lodges/{userId}
     //host객실목록조회
+    //todo: 권한체크
     @RoleCheck("Master")
     @GetMapping("/lodges/me")
     public BaseResponse<List<GetLodgeResponseDto>> getHostLodges(Pageable pageable,
@@ -111,8 +115,6 @@ public class LodgeController {
     }
 
 
-
-    //host객실목록조회(내부)
 
     //객실검색
     //api/lodges/search?

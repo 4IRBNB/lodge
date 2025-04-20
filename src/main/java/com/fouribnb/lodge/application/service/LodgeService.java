@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface LodgeService {
 
-    CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request);
+    CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request, UserInfo userInfo);
 
     GetLodgeResponseDto getLodge(UUID id);
 
