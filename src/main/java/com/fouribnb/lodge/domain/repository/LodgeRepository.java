@@ -13,4 +13,6 @@ public interface LodgeRepository {
     Optional<Lodge> findById(UUID id);
 
     Page<Lodge> findAll(Pageable pageable);
+
+    Page<Lodge> findAllByUserId(Pageable pageable, Long currentUserId);
 }
