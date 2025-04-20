@@ -56,12 +56,11 @@ public class LodgeServiceImpl implements LodgeService {
     }
 
     @Override
-    public Void deleteLodge(UUID id) {
+    public Void deleteLodge(UUID id, UserInfo userInfo) {
+        Long currentUserId = userInfo.getUserId();
         Lodge lodge = lodgeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("lodge를 찾을 수 없음"));
-//        lodge.delete(currentUserId);
-        lodge.delete(lodge.getHostId());
-        //todo. currentUserId 받아와서 입력
+        lodge.delete(currentUserId);
         lodgeRepository.save(lodge);
         return null;
     }

@@ -42,6 +42,7 @@ public class LodgeController {
             @RequestBody CreateLodgeRequestDto requestDto) {
         CreateLodgeResponseDto responseDto = lodgeService.createLodge(requestDto);
         return BaseResponse.SUCCESS(responseDto, "객실 생성 완료", HttpStatus.OK.value());
+        //todo: dto userId -> UserInfo로 변경예정
     }
 
     //객실단건조회
@@ -82,8 +83,8 @@ public class LodgeController {
 
     //객실삭제
     @DeleteMapping("/{lodgeId}")
-    public ResponseEntity<Void> deleteLodge(@PathVariable UUID lodgeId) {
-        lodgeService.deleteLodge(lodgeId);
+    public ResponseEntity<Void> deleteLodge(@PathVariable UUID lodgeId, @AuthenticatedUser UserInfo userInfo) {
+        lodgeService.deleteLodge(lodgeId, userInfo);
         return ResponseEntity.noContent().build();
     }
 
