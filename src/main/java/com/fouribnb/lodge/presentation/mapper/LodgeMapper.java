@@ -9,10 +9,10 @@ import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
 
 public class LodgeMapper {
 
-    public static Lodge createToEntity(CreateLodgeRequestDto dto) {
+    public static Lodge createToEntity(CreateLodgeRequestDto dto, Long currentHostId) {
         return Lodge.builder()
                 .lodgeName(dto.getLodgeName())
-                .hostId(dto.getHostId())
+                .hostId(currentHostId)
                 .roomType(dto.getRoomType())
                 .address(dto.getAddress())
                 .capacity(dto.getCapacity())

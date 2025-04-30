@@ -9,6 +9,7 @@ import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
 import com.fouribnb.lodge.presentation.mapper.LodgeMapper;
 import com.fourirbnb.common.exception.ResourceNotFoundException;
+import com.fourirbnb.common.security.UserInfo;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,13 +25,15 @@ public class LodgeServiceImpl implements LodgeService {
     private final LodgeRepository lodgeRepository;
 
     @Override
-    public CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request) {
-        Lodge lodge = LodgeMapper.createToEntity(request);
+    public CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request, UserInfo userInfo) {
+        Long currentHostId = userInfo.getUserId();
+        Lodge lodge = LodgeMapper.createToEntity(request, currentHostId);
         lodgeRepository.save(lodge);
         return LodgeMapper.createToResponse(lodge);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public GetLodgeResponseDto getLodge(UUID id) {
         Lodge lodge = lodgeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("lodge를 찾을 수 없음"));
@@ -46,6 +49,7 @@ public class LodgeServiceImpl implements LodgeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<GetLodgeResponseDto> getLodges(Pageable pageable) {
         Page<GetLodgeResponseDto> dtos =  lodgeRepository.findAll(pageable)
                 .map(LodgeMapper::getToResponse);
@@ -53,14 +57,22 @@ public class LodgeServiceImpl implements LodgeService {
     }
 
     @Override
-    public Void deleteLodge(UUID id) {
+    public Void deleteLodge(UUID id, UserInfo userInfo) {
+        Long currentUserId = userInfo.getUserId();
         Lodge lodge = lodgeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("lodge를 찾을 수 없음"));
-//        lodge.delete(currentUserId);
-        lodge.delete(lodge.getHostId());
-        //todo. currentUserId 받아와서 입력
+        lodge.delete(currentUserId);
         lodgeRepository.save(lodge);
         return null;
+    }
+
+    @Override
+    public Page<GetLodgeResponseDto> getHostLodges(Pageable pageable, UserInfo userInfo) {
+        Long currentHostId = userInfo.getUserId();
+        Page<GetLodgeResponseDto> dtos =  lodgeRepository.findAllByUserId(pageable, currentHostId)
+                .map(LodgeMapper::getToResponse);
+        return dtos;
+
     }
 
 

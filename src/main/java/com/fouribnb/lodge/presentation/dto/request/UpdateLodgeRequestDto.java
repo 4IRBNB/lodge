@@ -11,7 +11,7 @@ public class UpdateLodgeRequestDto {
 
     private String lodgeName;
     private RoomType roomType;
-    private int capacity;
+    private Integer capacity;
     private String address;
     private Long pricePerNight;
     private String description;

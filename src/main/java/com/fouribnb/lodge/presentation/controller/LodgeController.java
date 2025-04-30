@@ -8,6 +8,10 @@ import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
 import com.fourirbnb.common.response.BaseResponse;
 import com.fourirbnb.common.response.Pagination;
+import com.fourirbnb.common.security.AuthenticatedUser;
+import com.fourirbnb.common.security.RoleCheck;
+import com.fourirbnb.common.security.UserInfo;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +38,11 @@ public class LodgeController {
 
     private final LodgeService lodgeService;
 
+    //todo: 권한체크
     @PostMapping
     public BaseResponse<CreateLodgeResponseDto> createLodge(
-            @RequestBody CreateLodgeRequestDto requestDto) {
-        CreateLodgeResponseDto responseDto = lodgeService.createLodge(requestDto);
+            @Valid @RequestBody CreateLodgeRequestDto requestDto, @AuthenticatedUser UserInfo userInfo) {
+        CreateLodgeResponseDto responseDto = lodgeService.createLodge(requestDto, userInfo);
         return BaseResponse.SUCCESS(responseDto, "객실 생성 완료", HttpStatus.OK.value());
     }
 
@@ -50,6 +55,7 @@ public class LodgeController {
     }
 
     //객실수정
+    //todo: 권한체크
     @PatchMapping("/{lodgeId}")
     public BaseResponse<UpdateLodgeResponseDto> updateLodge(@PathVariable UUID lodgeId,
             @RequestBody UpdateLodgeRequestDto requestDto)
@@ -78,23 +84,42 @@ public class LodgeController {
     }
 
     //객실삭제
-
+    //todo: 권한체크
     @DeleteMapping("/{lodgeId}")
-    public ResponseEntity<Void> deleteLodge(@PathVariable UUID lodgeId) {
-        lodgeService.deleteLodge(lodgeId);
+    public ResponseEntity<Void> deleteLodge(@PathVariable UUID lodgeId, @AuthenticatedUser UserInfo userInfo) {
+        lodgeService.deleteLodge(lodgeId, userInfo);
         return ResponseEntity.noContent().build();
     }
 
+
+    /// api/lodges/{userId}
     //host객실목록조회
-    ///api/lodges/{userId}
+    //todo: 권한체크
+    @RoleCheck("Master")
+    @GetMapping("/lodges/me")
+    public BaseResponse<List<GetLodgeResponseDto>> getHostLodges(Pageable pageable,
+            @AuthenticatedUser UserInfo userInfo) {
+        Page<GetLodgeResponseDto> page = lodgeService.getHostLodges(pageable, userInfo);
 
-    //host객실목록조회(내부)
+        Pagination pagination = new Pagination(
+                page.getNumber(),
+                (long) page.getSize(),
+                page.getTotalPages(),
+                (int) page.getTotalElements()
+        );
+        return BaseResponse.SUCCESS(
+                page.getContent(),
+                "호스트_나의객실목록 조회 완료",
+                pagination
+        );
+    }
 
+
+
+    //객실검색
     //객실검색
     //api/lodges/search?
     //page=1&size=10&sortBy=createdAt&isAsc=true
-
-
 
 
 }

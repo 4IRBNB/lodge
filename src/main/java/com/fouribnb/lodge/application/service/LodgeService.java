@@ -1,21 +1,19 @@
 package com.fouribnb.lodge.application.service;
 
-import com.fouribnb.lodge.domain.entity.Lodge;
 import com.fouribnb.lodge.presentation.dto.request.CreateLodgeRequestDto;
 import com.fouribnb.lodge.presentation.dto.request.UpdateLodgeRequestDto;
 import com.fouribnb.lodge.presentation.dto.response.CreateLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
-import java.util.List;
+import com.fourirbnb.common.security.UserInfo;
 import java.util.UUID;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 
 public interface LodgeService {
 
-    CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request);
+    CreateLodgeResponseDto createLodge(CreateLodgeRequestDto request, UserInfo userInfo);
 
     GetLodgeResponseDto getLodge(UUID id);
 
@@ -23,6 +21,8 @@ public interface LodgeService {
 
     Page<GetLodgeResponseDto> getLodges(Pageable pageable);
 
-    Void deleteLodge(UUID id);
+    Void deleteLodge(UUID id, UserInfo userInfo);
+
+    Page<GetLodgeResponseDto> getHostLodges(Pageable pageable, UserInfo userInfo);
 
 }

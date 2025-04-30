@@ -78,14 +78,28 @@ public class Lodge extends BaseEntity {
         this.lodgeStatus = lodgeStatus;
     }
 
-    public void update(UpdateLodgeRequestDto requestDto) {
-        this.lodgeName = requestDto.getLodgeName();
-        this.roomType = requestDto.getRoomType();
-        this.capacity = requestDto.getCapacity();
-        this.address = requestDto.getAddress();
-        this.pricePerNight = requestDto.getPricePerNight();
-        this.description = requestDto.getDescription();
-        this.amenities = requestDto.getAmenities();
+    public void update(UpdateLodgeRequestDto dto) {
+        if(dto.getLodgeName() != null){
+            this.lodgeName = dto.getLodgeName();
+        }
+        if(dto.getRoomType() != null){
+            this.roomType = dto.getRoomType();
+        }
+        if(dto.getCapacity() != null){
+            this.capacity = dto.getCapacity();
+        }
+        if(dto.getAddress() != null){
+            this.address = dto.getAddress();
+        }
+        if(dto.getPricePerNight() != null){
+            this.pricePerNight = dto.getPricePerNight();
+        }
+        if(dto.getDescription() != null){
+            this.description = dto.getDescription();
+        }
+        if(dto.getLodgeName() != null){
+            this.amenities = dto.getAmenities();
+        }
     }
 
 }
