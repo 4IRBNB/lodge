@@ -69,10 +69,9 @@ public class LodgeServiceImpl implements LodgeService {
     @Override
     public Page<GetLodgeResponseDto> getHostLodges(Pageable pageable, UserInfo userInfo) {
         Long currentHostId = userInfo.getUserId();
-        Page<GetLodgeResponseDto> dtos =  lodgeRepository.findAllByUserId(pageable, currentHostId)
+        Page<GetLodgeResponseDto> dtos =  lodgeRepository.findAllByHostId(pageable, currentHostId)
                 .map(LodgeMapper::getToResponse);
         return dtos;
-
     }
 
 

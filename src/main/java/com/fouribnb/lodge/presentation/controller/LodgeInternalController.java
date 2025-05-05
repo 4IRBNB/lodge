@@ -1,68 +1,38 @@
 package com.fouribnb.lodge.presentation.controller;
 
 import com.fouribnb.lodge.application.service.LodgeService;
-import com.fouribnb.lodge.presentation.dto.request.CreateLodgeRequestDto;
-import com.fouribnb.lodge.presentation.dto.request.UpdateLodgeRequestDto;
-import com.fouribnb.lodge.presentation.dto.response.CreateLodgeResponseDto;
 import com.fouribnb.lodge.presentation.dto.response.GetLodgeResponseDto;
-import com.fouribnb.lodge.presentation.dto.response.UpdateLodgeResponseDto;
 import com.fourirbnb.common.response.BaseResponse;
 import com.fourirbnb.common.response.Pagination;
 import com.fourirbnb.common.security.AuthenticatedUser;
 import com.fourirbnb.common.security.RoleCheck;
 import com.fourirbnb.common.security.UserInfo;
-import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/lodges")
-public class LodgeController {
+@RequestMapping("/internal/lodges")
+public class LodgeInternalController {
 
     private final LodgeService lodgeService;
 
-    @RoleCheck({"MASTER", "MANAGER", "HOST"})
-    @PostMapping
-    public BaseResponse<CreateLodgeResponseDto> createLodge(
-            @Valid @RequestBody CreateLodgeRequestDto requestDto, @AuthenticatedUser UserInfo userInfo) {
-        CreateLodgeResponseDto responseDto = lodgeService.createLodge(requestDto, userInfo);
-        return BaseResponse.SUCCESS(responseDto, "객실 생성 완료", HttpStatus.OK.value());
-    }
-
-    //객실단건조회
+    //객실단건조회_내부
     @RoleCheck({"MASTER", "MANAGER", "HOST", "CUSTOMER"})
     @GetMapping("/{lodgeId}")
-    public BaseResponse<GetLodgeResponseDto> getLodge(@PathVariable UUID lodgeId)
+    public ResponseEntity<GetLodgeResponseDto> getInternalLodge(@PathVariable UUID lodgeId)
             throws NotFoundException {
         GetLodgeResponseDto responseDto = lodgeService.getLodge(lodgeId);
-        return BaseResponse.SUCCESS(responseDto, "객실 단건 조회 완료", HttpStatus.OK.value());
-    }
-
-    //객실수정
-    @RoleCheck({"MASTER", "MANAGER", "HOST"})
-    @PatchMapping("/{lodgeId}")
-    public BaseResponse<UpdateLodgeResponseDto> updateLodge(@PathVariable UUID lodgeId,
-            @RequestBody UpdateLodgeRequestDto requestDto)
-            throws NotFoundException {
-        UpdateLodgeResponseDto responseDto = lodgeService.updateLodge(lodgeId, requestDto);
-        return BaseResponse.SUCCESS(responseDto, "객실 수정 완료", HttpStatus.OK.value());
+        return ResponseEntity.ok(responseDto);
     }
 
     //객실목록조회
@@ -85,16 +55,6 @@ public class LodgeController {
 
     }
 
-    //객실삭제
-    @RoleCheck({"MASTER", "MANAGER", "HOST"})
-    @DeleteMapping("/{lodgeId}")
-    public ResponseEntity<Void> deleteLodge(@PathVariable UUID lodgeId, @AuthenticatedUser UserInfo userInfo) {
-        lodgeService.deleteLodge(lodgeId, userInfo);
-        return ResponseEntity.noContent().build();
-    }
-
-
-    /// api/lodges/{userId}
     //host객실목록조회
     @RoleCheck({"MASTER", "MANAGER", "HOST"})
     @GetMapping("/me")
@@ -114,6 +74,5 @@ public class LodgeController {
                 pagination
         );
     }
-
 
 }
